@@ -2470,6 +2470,11 @@ void uv_tty_set_vterm_state(uv_tty_vtermstate_t state) {
   uv_sem_post(&uv_tty_output_lock);
 }
 
+/* Neovim relies on this being here. */
+void __declspec(dllexport) uv_set_vterm_state(uv_tty_vtermstate_t state) {
+  return uv_tty_set_vterm_state(state);
+}
+
 int uv_tty_get_vterm_state(uv_tty_vtermstate_t* state) {
   uv_sem_wait(&uv_tty_output_lock);
   *state = uv__vterm_state;
